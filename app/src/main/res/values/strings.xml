@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">MyToDoApp</string>
+    <string name="my_does">My does</string>
+    <string name="finish_them_today_quickly">Finish them today quickly</string>
+    <string name="no_more_does">No more does !</string>
+    <string name="this_is_a_description_of_task">This is a description of task</string>
+    <string name="buy_new_tutorial">Buy new tutorial</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="add_new_task">Add new task.</string>
+    <string name="add_title">Add title</string>
+    <string name="description">Description</string>
+    <string name="what_you_wanna_do">What you wanna do ?</string>
+    <string name="target_time">Target time</string>
+    <string name="how_can_you_do_it">How can you do it ? (not much necessary)</string>
+    <string name="when_will">When will ?</string>
+    <string name="cancel">Cancel</string>
+    <string name="create">Create</string>
+    <string name="please_select_time">Please select time</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="edit_task">Edit task</string>
+</resources>
