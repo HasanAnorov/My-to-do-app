@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.widget.Toast
 import com.example.mytodoapp.model.Note
 import com.example.mytodoapp.model.Priority
 
@@ -82,7 +83,7 @@ class DbHelper(context: Context):SQLiteOpenHelper(context,Constants.DATABASE_NAM
 //        db.close()
 //    }
 
-    override fun edit(note: Note) {
+    override fun edit(note: Note,id:Int) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(Constants.TITLE,note.title)
@@ -99,8 +100,8 @@ class DbHelper(context: Context):SQLiteOpenHelper(context,Constants.DATABASE_NAM
                 contentValues.put(Constants.PRIORITY,"Low")
             }
         }
+        db.update(Constants.TABLE_NAME,contentValues,"${Constants.ID} = $id",null)
 
-        db.update(Constants.TABLE_NAME,contentValues,"${Constants.TITLE} = ${note.title}",null)
         db.close()
     }
 

@@ -20,7 +20,7 @@ class RecyclerAdapter(val listener:OnClick): RecyclerView.Adapter<RecyclerAdapte
         }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        fun onBind(note:Note,position: Int){
+        fun onBind(note:Note){
             itemView.title.text = note.title
             itemView.deadline_tv.text = note.time
             when (note.priority){
@@ -52,7 +52,7 @@ class RecyclerAdapter(val listener:OnClick): RecyclerView.Adapter<RecyclerAdapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(list[position],position)
+        holder.onBind(list[position])
     }
 
     override fun getItemCount(): Int = list.size

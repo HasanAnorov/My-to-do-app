@@ -8,7 +8,7 @@ interface DatabaseService {
     fun listOfNotes():List<Note>
     //fun delete(note:Note)
     fun deleteRow(note:Note)
-    fun edit(note:Note)
+    fun edit(note:Note,id:Int)
 
 
 }

@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.Toast
@@ -100,6 +101,7 @@ class MainActivity : AppCompatActivity(),OnClick {
 
         dialogView.editCard.setOnClickListener {
             val intent = Intent(this, EditActivity::class.java)
+            intent.putExtra("data",note)
             startActivity(intent)
 
             dialog.dismiss()
@@ -109,6 +111,18 @@ class MainActivity : AppCompatActivity(),OnClick {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+         when(item.itemId){
+             R.id.sort_by_name ->{
+
+             }
+             R.id.sort_by_priority ->{
+
+             }
+        }
         return true
     }
 

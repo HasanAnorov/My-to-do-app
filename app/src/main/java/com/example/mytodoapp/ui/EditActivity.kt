@@ -15,12 +15,16 @@ class EditActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditBinding
     private lateinit var dbHelper: DbHelper
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditBinding.inflate(layoutInflater)
         setContentView(binding.root)
         supportActionBar?.hide()
         dbHelper = DbHelper(this)
+
+        val data = intent.getSerializableExtra("data") as Note
+
 
         binding.update.setOnClickListener {
 
@@ -42,7 +46,7 @@ class EditActivity : AppCompatActivity() {
             if (title.isNotEmpty()&&deadline.isNotEmpty()) {
 
                 val note = Note(title, description, deadline, priority)
-                dbHelper.edit(note)
+                dbHelper.edit(note,data.id)
                 Toast.makeText(this, "Note edited", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
