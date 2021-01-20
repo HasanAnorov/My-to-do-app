@@ -1,5 +1,6 @@
 package com.example.mytodoapp.database
 
+import android.content.ContentValues
 import com.example.mytodoapp.model.Note
 
 interface DatabaseService {
@@ -8,7 +9,9 @@ interface DatabaseService {
     fun listOfNotes():List<Note>
     //fun delete(note:Note)
     fun deleteRow(note:Note)
-    fun edit(note:Note)
+    fun edit(note:Note,id:Int)
 
+    fun readByTitle():List<Note>
+    fun readByPriority(note: Note)
 
 }

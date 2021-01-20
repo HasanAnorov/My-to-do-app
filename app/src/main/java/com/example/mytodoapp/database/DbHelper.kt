@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.example.mytodoapp.model.Note
 import com.example.mytodoapp.model.Priority
+import kotlin.math.log
 
 class DbHelper(context: Context):SQLiteOpenHelper(context,Constants.DATABASE_NAME,null,Constants.VERSION),DatabaseService {
 
@@ -49,6 +50,7 @@ class DbHelper(context: Context):SQLiteOpenHelper(context,Constants.DATABASE_NAM
         val raw = db.rawQuery(query,null)
         if (raw.moveToFirst()){
             do {
+                val id = raw.getInt(0)
                 val title = raw.getString(1)
                 val description = raw.getString(2)
                 val deadline = raw.getString(3)
@@ -65,7 +67,7 @@ class DbHelper(context: Context):SQLiteOpenHelper(context,Constants.DATABASE_NAM
                     }
                 }
 
-                var note = Note(title,description,deadline,priority)
+                var note = Note(id,title,description,deadline,priority)
                 list.add(note)
 
             }while (raw.moveToNext())
@@ -82,7 +84,7 @@ class DbHelper(context: Context):SQLiteOpenHelper(context,Constants.DATABASE_NAM
 //        db.close()
 //    }
 
-    override fun edit(note: Note) {
+    override fun edit(note: Note,id:Int) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put(Constants.TITLE,note.title)
@@ -100,9 +102,72 @@ class DbHelper(context: Context):SQLiteOpenHelper(context,Constants.DATABASE_NAM
             }
         }
 
-        db.update(Constants.TABLE_NAME,contentValues,"${Constants.TITLE} = ${note.title}",null)
+          db.update(Constants.TABLE_NAME,contentValues,"${Constants.ID} = $id",null)
+//        db.update(Constants.TABLE_NAME,contentValues,"${Constants.ID} LIKE ?",
+//            arrayOf(arrayOf(id).toString())
+//        )
+
         db.close()
     }
+
+    override fun readByTitle():List<Note> {
+        var list = ArrayList<Note>()
+        val query = "select *from ${Constants.PRIORITY} order by ${Constants.TITLE}"
+        val db = this.writableDatabase
+        val raw = db.rawQuery(query,null)
+
+        if (raw.moveToFirst()){
+            do {
+                val id = raw.getInt(0)
+                val title = raw.getString(1)
+                val description = raw.getString(2)
+                val deadline = raw.getString(3)
+                var priority = Priority.None
+                when(raw.getString(4)){
+                    "Low" ->{
+                        priority = Priority.Low
+                    }
+                    "Middle" ->{
+                        priority = Priority.Middle
+                    }
+                    "Urgent" ->{
+                        priority = Priority.Urgent
+                    }
+                }
+                val note = Note(id,title,description,deadline,priority)
+                list.add(note)
+            }while (raw.moveToNext())
+        }
+        return  list
+    }
+
+//    override fun readSortedListAsc(): List<Note> {
+//        val list = ArrayList<Note>()
+//        val query = "select *from  ${Constants.TABLE_NAME} order by ${Constants.TITLE}"
+//        val db = this.writableDatabase
+//        val cursor = db.rawQuery(query, null)
+//
+//        if (cursor.moveToFirst()) {
+//            do {
+//                val title = cursor.getString(1)
+//                val id = cursor.getInt(0)
+//
+//                val message = cursor.getString(2)
+//                val date = cursor.getString(3)
+//                val type = cursor.getString(4)
+//
+//                val note = Note(id,title,message,date,type)
+//                list.add(note)
+//            } while (cursor.moveToNext())
+//        }
+//        return list
+//    }
+
+    override fun readByPriority(note: Note) {
+        TODO("Not yet implemented")
+    }
+
+
 
     override fun deleteRow(note: Note) {
        val db = this.readableDatabase

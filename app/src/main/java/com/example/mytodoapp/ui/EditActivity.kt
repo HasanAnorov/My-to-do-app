@@ -22,6 +22,8 @@ class EditActivity : AppCompatActivity() {
         supportActionBar?.hide()
         dbHelper = DbHelper(this)
 
+        val data = intent.getIntExtra("data",0)
+
         binding.update.setOnClickListener {
 
             val title = binding.etTask.text.toString()
@@ -42,7 +44,7 @@ class EditActivity : AppCompatActivity() {
             if (title.isNotEmpty()&&deadline.isNotEmpty()) {
 
                 val note = Note(title, description, deadline, priority)
-                dbHelper.edit(note)
+                dbHelper.edit(note,data)
                 Toast.makeText(this, "Note edited", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this,MainActivity::class.java)
                 startActivity(intent)
